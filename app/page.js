@@ -1,30 +1,39 @@
 "use client";
-import Image from "next/image";
-import styles from "./page.module.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 
-export default function Home() {
-  const [posts, setPosts] = useState([]);
+export default function Home({posts}) {
+const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    const data = fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((r) => r.json())
-      .then(setPosts);
-  }, []);
-
+useEffect(() => {
+  const timer = setInterval(() => setCount(n => n+1), 1000)
+  return () => {
+    clearInterval(timer)
+  }
+}, [])
   return (
     <>
       <Head>
         <title>My Great blog</title>
       </Head>
-      <ul>
+      <h1>Count : {count}</h1>
+      {/* <ul>
         {posts.map((post) => (
           <li>
             <h3>{post.title}</h3>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </>
   );
+}
+
+export async function getStaticProps() {
+  const posts = await fetch("https://jsonplaceholder.typicode.com/posts")
+  .then((r) => r.json())
+  return {
+    props : {
+      posts
+    }
+  }
 }
