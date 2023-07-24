@@ -1,3 +1,6 @@
+## About project
+This project aims to learn Next.js using [this tutorial](https://grafikart.fr/tutoriels/nextjs-react-1892) from [Grafikart](https://github.com/Grafikart) on Youtube. Thanks to follow him fore more content.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
