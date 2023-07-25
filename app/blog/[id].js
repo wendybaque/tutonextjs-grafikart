@@ -15,25 +15,36 @@ export default function Post({ post }) {
   );
 }
 
-export async function getStaticProps({ params }) {
-  const posts = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${params.id}`
-  ).then((r) => r.json());
-  return {
-    props: {
-      post,
-    },
-  };
-}
+// export async function getStaticProps({ params }) {
+//   const posts = await fetch(
+//     `https://jsonplaceholder.typicode.com/posts/${params.id}`
+//   ).then((r) => r.json());
+//   return {
+//     props: {
+//       post,
+//     },
+//   };
+// }
 
-export async function getStaticPaths() {
-  const posts = await fetch("https://jsonplaceholder.typicode.com/posts").then(
-    (r) => r.json()
-  );
-  return {
-    paths: posts.map((post) => ({
-      params: { id: post.id.toString() },
-    })),
-    fallback: false,
-  };
-}
+export async function getServerSideProps({ params }) {
+    const posts = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${params.id}`
+    ).then((r) => r.json());
+    return {
+      props: {
+        post,
+      },
+    };
+  }
+
+// export async function getStaticPaths() {
+//   const posts = await fetch("https://jsonplaceholder.typicode.com/posts").then(
+//     (r) => r.json()
+//   );
+//   return {
+//     paths: posts.map((post) => ({
+//       params: { id: post.id.toString() },
+//     })),
+//     fallback: false,
+//   };
+// }

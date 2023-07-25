@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export default function Home() {
+export default function Home({ posts, date }) {
   const [count, setCount] = useState(0);
   const [posts, setPosts] = useState([]);
 
@@ -32,8 +32,7 @@ export default function Home() {
             <Link href={`/blog/${post.id}`} alt="">
               <a>
                 <h3>
-                  {post.id} - 
-                  {post.title}
+                  {post.id} -{post.title} -{date}
                 </h3>
               </a>
             </Link>
@@ -44,12 +43,25 @@ export default function Home() {
   );
 }
 
-export async function getStaticProps() {
-  const posts = await fetch("https://jsonplaceholder.typicode.com/posts")
-  .then((r) => r.json())
+// export async function getStaticProps() {
+//   const posts = await fetch("https://jsonplaceholder.typicode.com/posts")
+//   .then((r) => r.json())
+//   return {
+//     props : {
+//       posts
+//     }
+//   }
+// }
+
+export async function getServerSideProps() {
+  const posts = await fetch("https://jsonplaceholder.typicode.com/posts").then(
+    (r) => r.json()
+  );
   return {
-    props : {
-      posts
-    }
-  }
+    props: {
+      posts,
+      date: new Date().toString(),
+    },
+    revalidate: 5,
+  };
 }
